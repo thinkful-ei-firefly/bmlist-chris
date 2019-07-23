@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> My Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="Styles/index.css">
+  
+</head>
+<body>
+  <main role="main">
+
+    <header>
+      <div class="container">
+
+          <h1>My Bookmarks</h1>
+
+      </div>
+    </header>
+
+    <section id="errors">
+        <div class="col">
+          <p id="error-message">Some Error</p>
+        </div>
+    </section>
+
+    <section id="main-menu">
+
+        <div class="col">
+          <form>
+            <input id="add-bookmark"type="submit" value="Add Bookmark">
+          </form>
+        </div>
+        <div class="col"> 
+            <label for="rating">Max Rating</label>
+            <select id="rating">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+        </div>
+
+        <div class="col">   
+        </div>
+        <div class="col">
+        </div>
+       
+    </section>
+
+    <section id="bookmarks-add-section">
+      <div class="col">
+        <div id="bookmarks-add">
+
+        </div>
+      </div>
+    </section>
+
+    <section id="bookmarks">
+
+      <div class="col">
+        <ul id="bookmarks-list">
+
+        <!-- dynamic content here -->
+
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="script/store.js"></script>
+  <script type="text/javascript" src="script/item.js"></script>
+  <script type="text/javascript" src="script/bookmarkList.js"></script>
+  <script type="text/javascript" src="script/api.js"></script>
+  <script type="text/javascript" src="script/index.js"></script>
+  
+</body>
+</html>
