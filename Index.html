@@ -1,83 +1,154 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> My Bookmarks</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" media="screen" href="Styles/index.css">
-  
-</head>
-<body>
-  <main role="main">
 
-    <header>
-      <div class="container">
-
-          <h1>My Bookmarks</h1>
-
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta http-equiv='X-UA-Compatible' content='ie=edge' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/index.css' />
+    <title>Bookmark</title>
+  </head>
+  <body class='wrapper'>
+    <header class='header-container'>
+      <div id='header'>
+        <h1>Bookmark</h1>
       </div>
     </header>
 
-    <section id="errors">
-        <div class="col">
-          <p id="error-message">Some Error</p>
-        </div>
-    </section>
+    <section class='main-container'>
+      <div id='js-add-btn'>
+        <span class='js-add-bookmark'>
+          <button class='add-bk'>Add Bookmark</button>
+        </span>
 
-    <section id="main-menu">
+        <div class='filter-ratings-container'>
+          <select name='filter-ratings' id='js-filter-ratings'>
+            <option value='1'>Filter By Rating</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+          </select>
+        </div>
+      </div>
 
-        <div class="col">
-          <form>
-            <input id="add-bookmark"type="submit" value="Add Bookmark">
-          </form>
-        </div>
-        <div class="col"> 
-            <label for="rating">Max Rating</label>
-            <select id="rating">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-        </div>
+      <div class='js-adding-item-container hidden'>
+        <form id='adding-item-form'>
 
-        <div class="col">   
-        </div>
-        <div class="col">
-        </div>
-       
-    </section>
+          <header class='adding-item-header'>
+            <h2>Create New Bookmark</h2>
+          </header>
 
-    <section id="bookmarks-add-section">
-      <div class="col">
-        <div id="bookmarks-add">
+          <div class='title-url-container'>
+            <label class='set-title' for='js-set-title'>Title:</label>
+            <input type='text' name='js-set-title' id='js-set-title' placeholder='Title' required />
 
-        </div>
+            <label class='set-url' for='js-set-url'>Website:</label>
+            <input type='text' name='js-set-url' id='js-set-url' value='http://' required />
+          </div>
+
+          <div class='description-rating-container'>
+            <div class='set-description'>
+              <label for='js-set-desc' class='label-text'></label>
+              <textarea type='text' name='js-set-desc' id='js-set-desc'  placeholder='Description...' required></textarea>
+            </div>
+
+            <fieldset class='set-rating'>
+              <legend>Rating</legend>
+
+              <input type='radio' id='js-set-rating1' name='js-set-rating' value='1' />
+              <label for='js-set-rating1'><?xml version="1.0" encoding="UTF-8"?>
+                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: sketchtool 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                    <title>star</title>
+                    <desc>Created with sketchtool.</desc>
+                    <g id="shape" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="star" fill="#000000" fill-rule="nonzero">
+                            <polygon id="Shape" points="12.5 17.9252329 6.62867711 21 7.75 14.4875388 3 9.8753882 9.56433855 8.92523292 12.5 3 15.4356614 8.92523292 22 9.8753882 17.25 14.4875388 18.3713229 21"></polygon>
+                        </g>
+                    </g>
+                </svg>
+              </label><br />
+
+              <input type='radio' id='js-set-rating2' name='js-set-rating' value='2' />
+              <label for='js-set-rating2'><?xml version="1.0" encoding="UTF-8"?>
+                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: sketchtool 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                    <title>star</title>
+                    <desc>Created with sketchtool.</desc>
+                    <g id="shape" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="star" fill="#000000" fill-rule="nonzero">
+                            <polygon id="Shape" points="12.5 17.9252329 6.62867711 21 7.75 14.4875388 3 9.8753882 9.56433855 8.92523292 12.5 3 15.4356614 8.92523292 22 9.8753882 17.25 14.4875388 18.3713229 21"></polygon>
+                        </g>
+                    </g>
+                </svg>
+              </label><br />
+
+              <input type='radio' id='js-set-rating3' name='js-set-rating' value='3' />
+              <label for='js-set-rating3'><?xml version="1.0" encoding="UTF-8"?>
+                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: sketchtool 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                    <title>star</title>
+                    <desc>Created with sketchtool.</desc>
+                    <g id="shape" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="star" fill="#000000" fill-rule="nonzero">
+                            <polygon id="Shape" points="12.5 17.9252329 6.62867711 21 7.75 14.4875388 3 9.8753882 9.56433855 8.92523292 12.5 3 15.4356614 8.92523292 22 9.8753882 17.25 14.4875388 18.3713229 21"></polygon>
+                        </g>
+                    </g>
+                </svg>
+              </label><br />
+
+              <input type='radio' id='js-set-rating4' name='js-set-rating' value='4' />
+              <label for='js-set-rating4'><?xml version="1.0" encoding="UTF-8"?>
+                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: sketchtool 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                    <title>star</title>
+                    <desc>Created with sketchtool.</desc>
+                    <g id="shape" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="star" fill="#000000" fill-rule="nonzero">
+                            <polygon id="Shape" points="12.5 17.9252329 6.62867711 21 7.75 14.4875388 3 9.8753882 9.56433855 8.92523292 12.5 3 15.4356614 8.92523292 22 9.8753882 17.25 14.4875388 18.3713229 21"></polygon>
+                        </g>
+                    </g>
+                </svg>
+              </label><br />
+
+              <input type='radio' id='js-set-rating5' name='js-set-rating' value='5' />
+              <label for='js-set-rating5'><?xml version="1.0" encoding="UTF-8"?>
+                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: sketchtool 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+                    <title>star</title>
+                    <desc>Created with sketchtool.</desc>
+                    <g id="shape" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="star" fill="#000000" fill-rule="nonzero">
+                            <polygon id="Shape" points="12.5 17.9252329 6.62867711 21 7.75 14.4875388 3 9.8753882 9.56433855 8.92523292 12.5 3 15.4356614 8.92523292 22 9.8753882 17.25 14.4875388 18.3713229 21"></polygon>
+                        </g>
+                    </g>
+                </svg>
+              </label>
+
+            </fieldset>
+          </div>
+
+          <div class='js-error-message hidden error'></div>
+
+          <div class='add-cancel-container'>
+            <button type='submit' id='js-submit-bookmark'>Add Bookmark</button>
+            <button type='button' id='js-cancel-submit'>Cancel</button>
+          </div>
+          
+        </form>
       </div>
     </section>
 
-    <section id="bookmarks">
+    <div class='bookmark-container'></div>
 
-      <div class="col">
-        <ul id="bookmarks-list">
-
-        <!-- dynamic content here -->
-
-        </ul>
-      </div>
-    </section>
-
-  </main>
-
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="Script/store.js"></script>
-  <script type="text/javascript" src="Script/item.js"></script>
-  <script type="text/javascript" src="Script/bookmarkList.js"></script>
-  <script type="text/javascript" src="Script/api.js"></script>
-  <script type="text/javascript" src="Script/index.js"></script>
-  
-</body>
+    <script type='text/javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script type='text/javascript' src='Script/store.js'></script>
+    <script type='text/javascript' src='/Script/api.js'></script>
+    <script type='text/javascript' src='/Script/bookmarkList.js'></script>
+    <script type='text/javascript' src='/Script/index.js'></script>
+    <script type='text/javascript' src='/Script/item.js'></script>
+  </body>
 </html>

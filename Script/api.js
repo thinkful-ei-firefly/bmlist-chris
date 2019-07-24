@@ -1,69 +1,50 @@
-'use strict';
-
 const api = (function(){
-  const baseUrl = 'https://thinkful-list-api.herokuapp.com/james-joel';
-  
-  function getBookmarks() {
-    return bookmarkApiFetch(`${baseUrl}/bookmarks`);
-  }
-  
-  function createBookmark(title, url, desc = '', rating = 1) {
-    return bookmarkApiFetch(`${baseUrl}/bookmarks`,
-      {
-        method: 'POST',
-        headers:
-          {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify({ title, url, desc, rating }),
-      });
-  }
 
-  function deleteBookmark(id) {
-    return bookmarkApiFetch(`${baseUrl}/bookmarks/${id}`, 
-      {
-        method: 'DELETE',
-      });
-  }
+  const BASE_URL = 'https://thinkful-list-api.herokuapp.com/davidba-scottw/bookmarks';
 
-  function updateBookmark(id, updateData) {
-    return bookmarkApiFetch(`${baseUrl}/bookmarks/${id}`,
-      {
-        method: 'PATCH',
-        headers:
-          {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify(updateData),
-      });
-  } 
-
-  function bookmarkApiFetch(...args) {
-    let error;
-    return fetch(...args)
-      .then(res => {
-        if(!res.ok) {
-          error = { code: res.status };
-          store.error = error;
+  const getBookmarks = function(){
+    let error = null;
+    return fetch(BASE_URL)
+      .then (res => {
+        if (!res.ok) {
+          error = {code: res.status};
         }
         return res.json();
       })
       .then(data => {
         if (error) {
-          error.message = data.message;
-          store.error = error.message;
-          return Promise.reject(error);
+          return app.handleErrors(error, data);
         }
+        store.addBookmarks(data);
+        app.render();
+      })
+    ;
+  };
 
-        return data;
-      });
-  }
+
+  // creating
+  const createBookmark = function(newItem){
+    const newBookmark = JSON.stringify(newItem);
+
+    return fetch(BASE_URL, {
+      method: 'POST',
+      headers: new Headers({'Content-Type': 'application/json'}),
+      body: newBookmark,
+    });
+  };
+
+
+  // Delete
+  const deleteBookmark = function(id){
+    return fetch(`${BASE_URL}/${id}`, {
+      method: 'DELETE',
+    });
+  };
+
 
   return {
     getBookmarks,
     createBookmark,
-    deleteBookmark,
-    updateBookmark,
+    deleteBookmark
   };
-
-}());
+})();

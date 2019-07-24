@@ -1,42 +1,45 @@
-'use strict';
-
-
-
 const store = (function(){
 
-  const addBookmark = function(id, title, url, rating = 5, description = '') {
-    this.bookmarks.push({ id, title, url, rating, description, });
+  const addExpanded = function(){
+    this.items.map(item => item.expanded = false);
   };
 
-  const findById = function(id) {
-    return this.bookmarks.find(bookmark => bookmark.id === id);
+  const toggleExpanded = function(id){
+    const target = this.items.find(item => item.id === id);
+    target.expanded = !target.expanded;
   };
 
-  const findAndUpdate = function(id, newData) {
-    return Object.assign(this.findById(id), newData);
+  const addBookmarks = function(bookmarks){
+    this.items = bookmarks;
+    this.addExpanded();
   };
 
-  const findAndDelete = function(id) {
-    this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id !== id);
+  const toggleIsAdding = function(){
+    this.isAdding = !this.isAdding;
   };
 
-  const setBookmarkExpanded = function(id) {
-   
-    this.expanded = id;
-    
+  const setMinimum = function(newMinimum){
+    this.minimum = newMinimum;
+  };
+
+
+  const setErrorMessage = function(message){
+    this.errorMessage = message;
   };
 
   return {
-    bookmarks: [],
-    error: null,
-    addBookmark,
-    showAdding: false,
-    findById,
-    findAndUpdate,
-    findAndDelete,
-    setBookmarkExpanded,
-    filterRating: 5,
-    expanded: null,
-  };
+    items: [],
+    isAdding: false,
+    minimum: 0,
+    errorMessage: '',
 
-}());
+    addBookmarks,
+    toggleIsAdding,
+    setMinimum,
+    
+    addExpanded,
+    toggleExpanded,
+
+    setErrorMessage,
+  };
+})();

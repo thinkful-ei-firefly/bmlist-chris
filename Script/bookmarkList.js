@@ -1,238 +1,210 @@
 'use strict';
 
-const bookmarkList = (function() {
+const app = (function () {
 
-    function generateAddBookmarkHTML() {
-      return `
-      <form id="bookmark-form-add">
-        <p>Create a Bookmark</p>
-        <div class="bookmark-title">
-          <div class="form-group">
-            <div class="col">
-                <label for="bookmark-title-add">Title:</label>
-                <input id="bookmark-title-add" type="text">
-            </div>
-            <div class="col">
-              <label for="bookmark-url-add">Url:</label>
-              <input id="bookmark-url-add" type="text">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col">
-                <label for="bookmark-description-add">Description:</label><br>
-                <textarea id="bookmark-description-add"></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col">
-              <input id="create-bookmark-save" type="submit" value="Save">
-            </div>
-            <div class="col">
-              <input id="create-bookmark-cancel" type="submit" value="Cancel">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <ul class="bookmark-rating">
-              Rating:
-              <li><input type="radio" name="rating" value="1" checked>1<br></li>
-              <li><input type="radio" name="rating" value="2" checked>2<br></li>
-              <li><input type="radio" name="rating" value="3" checked>3<br></li>
-              <li><input type="radio" name="rating" value="4" checked>4<br></li>
-              <li><input type="radio" name="rating" value="5" checked>5<br></li>
-            </ul>
-          </div>
+  // generating dom for bookmarks
+  function generateBookmarkEl(item) {
+
+    if (item.expanded) {
+      return `<div class='bookmark bookmark-border'>
+      <div class='title-delete-container'>
+        <button id='js-expand-btn' data-id="${item.id}">-</button>
+        <div class='clearFix' style='clear:both;'>
+          <span class='bookmarkTitle clear'>${item.title}</span>
+          <span class="bookmark-rating clear">Rating: ${item.rating}</span>
         </div>
-      </form>`;
-    }
-  
-    function generateBookmarkElementExpanded(bookmark) {
-      return `
-      <li data-item-id="${bookmark.id}">
-        <form id="expanded-bookmark-form">
-          <p><a class="bookmark-title-link" href="">${bookmark.title}</a><p>
-          <div class="col">
-            <p>${bookmark.description}</p>
-          </div>
-          
-          <div class="form-group">
-            <div class="col">
-              <a href="${bookmark.url}" target="_blank">Vist site</a>
-            </div>
-            <div class="col">
-              <a href="#" class="expanded-bookmark-delete">Delete</a>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <ul class="bookmark-rating">
-              ${generateBookMarkElementRatingHelper(bookmark.rating)}
-            </ul>
-          </div>
-        </form>
-      </li>
-      <hr>`;
-    }
-  
-    function generateBookmarkElement(bookmark) {  
-      return `
-      <li data-item-id="${bookmark.id}">
-        <form>
-        
-          <p><a class="bookmark-title-link" href="">${bookmark.title}</a></p>
-          
-          <div class="form-group">
-            <ul class="bookmark-rating">
-              ${generateBookMarkElementRatingHelper(bookmark.rating)}
-            </ul>
-          </div>
-        </form>
-      </li>
-      <hr>`;
-    }
-  
-    function generateBookMarkElementRatingHelper(rating) {
-      let ratingList = [];
-      let count = 0;
-      for (let i = 0; i <= rating - 1; i++) {
-        if(count >= rating) {
-          ratingList[i] = '<li><i class="far fa-star"></i></li>';
-        }
-        else {
-          ratingList[i] = '<li><i class="fas fa-star"></i></li>';
-        }
-        count++;
-      }
-      return ratingList.join('');
-    }
-  
-    function generateBookmarkItems(bookmarksPreRender) {
-      let bookmarksPostRender = [];
-      
-      bookmarksPreRender.forEach(bookmark => {
-        if(bookmark.id === store.expanded) {
-          bookmarksPostRender.push(generateBookmarkElementExpanded(bookmark));
-        }
-  
-        if(bookmark.id !== store.expanded) {
-          bookmarksPostRender.push(generateBookmarkElement(bookmark));
-        }
-      });
-  
-      return bookmarksPostRender;
-    }
-  
-    function render() {
+        <button id='js-delete-btn' data-id="${item.id}">x</button> 
+      </div>
+      <p>${item.desc}</p>
+      <a href='${item.url}' target='_blank'>${item.url}</a>
+      </div>`;
+    
+    } else{
+      return `<div class='bookmark bookmark-border'>
+    <div class='title-delete-container'>
+     <button id='js-expand-btn' data-id="${item.id}">+</button>
      
-      if(store.error !== null) {
-        $('#errors').css('display', 'block');
+    <div class='clearFix' style='clear:both;'>
+      <span class='bookmarkTitle clear'>${item.title}</span>
+      <span class='bookmark-rating clear'>Rating: ${item.rating}</span>
+     </div>
+      <button id='js-delete-btn' data-id="${item.id}">x</button>
+      </div>
+    </div>`;
+    }
+  }
+  
+  // set the store with mapping
+  function generateBookmarkString() {
+    
+    const filteredArray = store.items.filter(
+      item => item.rating >= store.minimum
+    );
 
-        $('#error-message').text(store.error); 
-      }
-  
-      if(store.error === null) {
-        $('#errors').css('display', 'none');
-      }
-  
-      if(store.showAdding) {
-        const newBookmarkHTML = generateAddBookmarkHTML();
-        $('#bookmarks-add').html(newBookmarkHTML);
-      }
-  
-      let bookmarksFiltered = store.bookmarks.filter( bookmark => bookmark.rating <= store.filterRating );
+    const bookmarkArray = filteredArray.map(item => 
+      generateBookmarkEl(item)
+    );
+    
+    return bookmarkArray.join('');
+    
+  }
+
+  // rendering to DOM
+  function render() {
+
+
+    if(store.errorMessage) {
+      $('.js-error-message').html(`<p>${store.errorMessage}</p>`).fadeIn('slow').fadeOut(500).fadeIn   ('slow').fadeOut(500).fadeIn('slow');
+      $('.js-error-message').removeClass('hidden');
+    }
+
+    if(!store.errorMessage) {
+      $('.js-error-message').html('');
+      $('.js-error-message').addClass('hidden');
+    }
+
+    if (store.isAdding) {
+      $('#js-add-btn, #header').addClass('hidden');
+      $('.js-adding-item-container').removeClass('hidden');
+
+    
+    } else if (!store.isAdding) {
+      $('#js-add-btn, #header').removeClass('hidden');
+      $('.js-adding-item-container').addClass('hidden');
+    }
+
+    const bookmarkString = generateBookmarkString();
+    $('.bookmark-container').html(bookmarkString);
+  }
       
-      const bookmarksRendered = generateBookmarkItems(bookmarksFiltered);
-      $('#bookmarks-list').html(bookmarksRendered);
-    }
-  
-    function getItemIdFromElement(item) {
-      return $(item).closest('li').data('item-id');
-    }
-  
-    function handleAddBookmark() {
-      $('#add-bookmark').click((event) => {
-        event.preventDefault();
-        store.showAdding = true;
-        render();
-      });
-    }
-    
-    function handleMinRating() {
-      $('#rating').change(() => {
-        store.filterRating = parseInt($('#rating').val());
-        render();
-      });
-    }
-    
-    function handleSaveBookmark() {
-      $('#bookmarks-add').on('click', '#create-bookmark-save', (event) => {
-  
-        event.preventDefault();
-        let title = $('#bookmark-title-add').val();
-        let url = $('#bookmark-url-add').val();
-        let description = $('#bookmark-description-add').val();
-        let rating = $('input[name=rating]:checked').val();
-  
-        $('#bookmarks-add').html('');
 
-        $('#rating').val(store.filterRating);
-        api.createBookmark(title, url, description, rating)
-          .then(response => {
-            store.addBookmark(response.id, title, url, rating, description);
-            store.showAdding = false;
-            store.error = null;
-            render();
-          })
-          .catch(error => {
-            store.error = error.message;
-            render();
-            
-          });
-      });
-    }
+  // handler for add bookmark
+  function handleAddBookmark() {
+    $('.js-add-bookmark').on('click', () => {
+      store.toggleIsAdding();
+      render();
+    });
+  }
+
+  // clearing text fields 
+  function clearInputFields() {
+    $('#js-set-title').val('');
+    $('#js-set-url').val('');
+    $('#js-set-desc').val('');
+    $('input[name=js-set-rating]').prop('checked',false);
+  }
+
+  // error handling
+  function handleErrors(error, data) {
+    error.message = data.message;
+    store.setErrorMessage(error.message);
+    render();
+    store.setErrorMessage('');
+    return Promise.reject(error);
+  }
+
+  // handler for bookmark submit
+  function handleSubmitNewBookmark() {
+    $('.js-adding-item-container').on('click', '#js-submit-bookmark', (event) => {
+      event.preventDefault();
+
+      const newItem = {
+
+        title: $('#js-set-title').val(),
+        url: $('#js-set-url').val(),
+        desc: $('#js-set-desc').val(),
+        rating: $('input[name=js-set-rating]:checked', '.set-rating').val()
+
+      };
+
+      //trying something for error handling
+      let error = null;
+      api.createBookmark(newItem)
+        .then(res => {
+          if (!res.ok) {
+            error = {code: res.status};
+          }
+          return res.json();
+        })
+        .then(data => {
+          if (error) {
+
+            return handleErrors(error, data);
+          }
+          store.toggleIsAdding();
+          clearInputFields();
+          api.getBookmarks();
+        });
+    });
+  }
+
+  // handler for delete event
+  function handleDeleteBookmark() {
+
+    $('.bookmark-container').on('click', '#js-delete-btn', event => {
+      const id = $(event.target).data('id');
+      let error = null;
+      api.deleteBookmark(id)
+        .then(res => {
+          if (!res.ok) {
+            error = {code: res.status};
+          }
+          return res.json();
+        })
+        .then(data => {
+          if (error) {
+
+            return handleErrors(error, data);
+          }
+          api.getBookmarks();
+        });
+    });
+  }
+
+  // handler for expand button
+  function handleExpandButton() {
+    $('.bookmark-container').on('click', '#js-expand-btn', event => {
+      const id = $(event.target).data('id');
+      store.toggleExpanded(id);
+      render();
+    });
+  }
+
+  // handler for cancel button
+  function handleCancelSubmit() {
+    $('#js-cancel-submit').click(function(){
+      store.toggleIsAdding();
+      clearInputFields();
+      render();
+    });
+  }
+
+
+  // handling our filter bookmarks
+  function handleFilterItems() {
+    $('#js-filter-ratings').change(function(){
+      store.setMinimum($('#js-filter-ratings').val());
+      render();
+    });
+  }
+
+
+  function bindEventListeners() {
+    handleAddBookmark();
+    handleSubmitNewBookmark();
+    handleDeleteBookmark();
+    handleCancelSubmit();
+    handleFilterItems();
+
     
-    function handleCancelBookmark() {
-      $('#bookmarks-add').on('click', '#create-bookmark-cancel', event => {
-        event.preventDefault();
-        $('#bookmarks-add').html('');
-        render();
-      });
-    }
-    
-    function handleDeleteBookmark() {
-      $('#bookmarks-list').on('click', '.expanded-bookmark-delete', event => {
-        event.preventDefault();
-        let id = getItemIdFromElement(event.target);
-        store.findAndDelete(id);
-        api.deleteBookmark(id);
-        render();
-      });
-    }
-    
-    function handleExpandBookmark() {
-      $('#bookmarks-list').on('click', '.bookmark-title-link', event => {
-        event.preventDefault();
-        let id = getItemIdFromElement(event.target);
-        store.setBookmarkExpanded(id);
-        render();
-      });
-    }
-   
-    
-    function bindEventListeners() {
-      handleAddBookmark();
-      handleMinRating(); 
-      handleSaveBookmark();
-      handleCancelBookmark();
-      handleDeleteBookmark();
-      handleExpandBookmark();
-    }
-  
-    return {
-      generateBookmarkElement,
-      generateBookmarkItems,
-      render,
-      bindEventListeners,
-    };
-  
-  }());
+    handleExpandButton();
+  }
+  return {
+    render,
+    bindEventListeners,
+
+    generateBookmarkEl,
+    generateBookmarkString,
+    handleErrors,
+  };
+})();

@@ -1,70 +1,192 @@
-body {
-    /* height: 100%; */
-  }
-  
-  .main {
-    /* border: 1px solid black; */
-  }
-  
-  header {
-    width: 70vw;
-    margin: 0 auto;
-  }
-  
-  section {
-    width: 70vw;
-    margin: 0 auto;
-    display: flex;
-    /* border: 1px solid black; */
-    justify-content: center;
-    align-content: center;
-  }
-  
-  .col {
-    flex-grow: 1;
-    flex-shrink: 1;
-    align-items: center;
-  }
-  
-  .col-2 {
-    flex-grow: 2;
-    flex-shrink: 2;
-    border: 1px solid black;
-    align-items: center;
-  }
-  
-  form {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .form-group {
-    display: flex;
-    margin: 10px 0;
-  }
-  
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  textarea {
-    resize: none;
-    width: 100%;
-  }
-  
-  .bookmark-rating {
-    display: flex;
-  }
-  
-  #errors {
-    display: none;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 10vh;
-    background-color: white;
-    text-align: center;
-    border-bottom: 1px black solid;
-  }
+* {
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+body{
+   margin-right: auto;
+   margin-left:  auto;
+   max-width: 960px;
+   padding-right: 10px;
+   padding-left:  10px;
+   font-size: 16px;
+   background: #F0F0F0;
+}
+
+.header-container{
+ margin-top: 20px;
+ margin-bottom: 15px;
+ display: flex;
+ justify-content: center;
+ height: 45px;
+}
+
+.adding-item-container {
+ border: solid black;
+ display: flex;
+ justify-content: center;
+ justify-content: center;
+ width: 600px;
+ padding: 20px;
+}
+
+/* css styling for content rendered to DOM */
+.description-rating-container {
+ display: flex;
+}
+
+.label-text {
+ display: block;
+}
+
+textarea {
+ height: 125px;
+ width: 425px;
+}
+
+.set-rating {
+ padding: 5px;
+ height: 125px;
+ position: relative;
+ left: 5px;
+}
+
+.adding-item-header, 
+.title-url-container,
+.description-rating-container,
+.add-cancel-container {
+ display: flex;
+ justify-content: center;
+}
+
+#js-add-btn{
+ display: block;
+ text-align: center;
+}
+
+.title-url-container{
+ margin-bottom: 1rem;
+}
+
+.adding-item-header h2 {
+ margin: 10px;
+}
+
+/* main styling*/
+#main-container{
+   margin-bottom: 2rem;
+}
+
+#js-main-buttons{
+   display: flex;
+   justify-content: center;
+   margin-bottom: 2rem;
+}
+
+.set-title,
+.set-url{
+ margin-right: 5px;
+}
+
+#js-set-title{
+ margin-right: 3rem;
+ outline: none;
+}
+
+#js-set-url{
+ margin-right: 3rem;
+ outline: none;
+}
+
+#js-set-desc{
+ outline: none;
+}
+
+.bookmark-container {
+   text-align: center; 
+}
+
+.bookmark-border{
+ margin-top: 15px;
+ margin-right: 100px;
+ margin-left: 100px;
+ border: 1px solid #000000;
+ border-radius: 4px;
+ background: #ffffff
+}
+
+.clearFix{
+ clear: both;
+ display: inline-block;
+}
+
+#rating{
+ display: inline;
+ margin-top: 5px;
+}
+
+h5{
+ margin-bottom: 5px;
+}
+
+.js-error-message{
+ text-align: center;
+ border: 1px solid;
+ margin-left: 290px;
+ margin-right: 355px;
+ height: 50px
+}
+
+.error{
+ color: #D8000C;
+ background-color: #FFBABA;
+ padding-bottom: 5px;
+}
+
+.error p{
+ overflow: hidden;
+ position: relative;
+ bottom: 8px;
+}
+
+/* BUTTON STYLING */
+#js-filter-ratings{
+ outline: none;
+ cursor: pointer;
+}
+
+#js-submit-bookmark{
+ position: relative;
+ right: 5rem;
+}
+
+.add-cancel-container{
+ margin-bottom: 10px;
+ margin-top: 10px;
+}
+
+#js-expand-btn{
+ float: left;
+ border-radius: 4px;
+}
+
+#js-delete-btn{
+ float: right;
+ border-radius: 4px;
+}
+
+#js-expand-btn:hover, #js-delete-btn:hover{
+ background: #D3D3D3	;
+}
+
+.add-bk{
+ margin-bottom: 2px;
+}
+
+button{
+ cursor: pointer;
+}
+
+.hidden {
+ display: none !important;
+}
